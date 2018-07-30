@@ -23,8 +23,8 @@ namespace VideoRentalApp.Controllers
             };
 
             
-                return View(movie2);
-            
+               return View(movie2);
+           // return RedirectToAction("Index", "Home", new { page = 1, sortBy = "name" });            
 
             
         }
