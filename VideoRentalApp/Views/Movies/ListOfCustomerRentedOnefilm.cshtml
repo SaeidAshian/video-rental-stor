@@ -1,0 +1,24 @@
+﻿@model VideoRentalApp.ViewModels.CustomerMovieModels
+@{
+    ViewBag.Title = "ListOfCustomerRentedOnefilm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var className = Model.Customers.Count > 5 ? "poular" : null;
+}
+
+<h2 class="@className" >@Model.Movie.Name</h2>
+@if (Model.Customers.Count == 0)
+{
+    <text>There is no customer rened this film</text>
+}
+else
+{
+    <ul>
+        @foreach (var customer in Model.Customers)
+        {
+            <li>@customer.Name</li>
+        }
+    </ul>
+}
+

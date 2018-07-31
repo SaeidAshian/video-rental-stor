@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VideoRentalApp.Models;
+using VideoRentalApp.ViewModels;
 
 namespace VideoRentalApp.Controllers
 {
@@ -23,7 +24,12 @@ namespace VideoRentalApp.Controllers
             };
 
             
-               return View(movie2);
+                
+                
+
+            
+              return View(movie2);
+           
            // return RedirectToAction("Index", "Home", new { page = 1, sortBy = "name" });            
 
             
@@ -33,5 +39,27 @@ namespace VideoRentalApp.Controllers
         {
             return Content(year+"/"+ month);
         }
+
+        public ActionResult ListOfCustomerRentedOnefilm()
+        {
+            var movie = new Movie() { Name = "sherk" };
+            var customers = new List<Customer>
+            {
+                new Customer{Name="saeid"},
+                new Customer{Name="sara"},
+                new Customer{Name="sara2"},
+                new Customer{Name="sahar"},
+                new Customer{Name="samira"},
+            };
+            var viewModel = new CustomerMovieModels
+            {
+                Movie = movie,
+                Customers = customers
+            };
+
+
+            return View(viewModel);
+        }
+
     }
 }
