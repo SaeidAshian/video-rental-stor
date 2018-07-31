@@ -28,5 +28,10 @@ namespace VideoRentalApp.Controllers
 
             
         }
+        [Route("movies/byrealeasdate/{year}/{month:regex(\\d{2}):range(1 , 12)}")]
+        public ActionResult ByRealeaseYear(int year , int month)
+        {
+            return Content(year+"/"+ month);
+        }
     }
 }
