@@ -13,8 +13,11 @@ namespace VideoRentalApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapMvcAttributeRoutes();
-            
 
+            routes.MapRoute("Details",
+                "Customer/dtails/{Id}",
+                new { Controller = "customer", Action = "Details" }
+                );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

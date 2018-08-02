@@ -29,5 +29,7 @@ namespace VideoRentalApp.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<VideoRentalApp.Models.Customer> Customers { get; set; }
     }
 }

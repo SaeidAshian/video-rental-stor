@@ -1,0 +1,21 @@
+﻿@model List<VideoRentalApp.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>customers detail</h1>
+
+    
+
+        @foreach (var item in Model)
+        {
+            
+
+                <h5>@item.Name</h5>
+
+           
+        }
+
+<h5>
+    @Html.ActionLink("click to return", "Index","Customer")
+</h5>
