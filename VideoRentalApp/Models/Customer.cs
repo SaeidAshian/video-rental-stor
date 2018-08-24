@@ -11,5 +11,8 @@ namespace VideoRentalApp.Models
         public string Name { get; set; }
         public string Family { get; set; }
         public int Birthday { get; set; }
+        public bool IsSubscribToNewsletter { get; set; }
+        public MembershipType MembershipType { get; set; }
+        public byte MembershipTypeId { get; set; }
     }
 }
