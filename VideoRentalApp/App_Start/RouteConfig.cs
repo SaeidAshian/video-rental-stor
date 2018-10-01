@@ -18,6 +18,9 @@ namespace VideoRentalApp
                 "Customer/dtails/{Id}",
                 new { Controller = "customer", Action = "Details" }
                 );
+            routes.MapRoute("Index",
+                "Movie/Index",new{Controller="Movie",Action="Index"}
+           );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

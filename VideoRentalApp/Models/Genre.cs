@@ -6,14 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VideoRentalApp.Models
 {
-    public class MembershipType
+    public class Genre
     {
         public byte Id { get; set; }
         [Required]
-        public string NameOfType { get; set; }
-        public short SignUpFee { get; set; }
-        public byte DurationInMonth { get; set; }
-        public Byte DiscountRate { get; set; }
-        
+        [StringLength(255)]
+        public string Name { get; set; }
     }
 }

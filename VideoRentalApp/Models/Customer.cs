@@ -13,7 +13,7 @@ namespace VideoRentalApp.Models
         [StringLength(255)]
         public string Name { get; set; }
         public string Family { get; set; }
-        public int Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public bool IsSubscribToNewsletter { get; set; }
         public MembershipType MembershipType { get; set; }
         public byte MembershipTypeId { get; set; }
