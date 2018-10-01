@@ -1,31 +1,36 @@
-﻿@model List<VideoRentalApp.Models.Customer>
+﻿@model IEnumerable<VideoRentalApp.Models.Customer>
     @{
-        ViewBag.Title = "Index";
+        ViewBag.Title = "Customers";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
     <h1>List of customers</h1>
-    @if (Model == null)
+    @if (!Model.Any())
     {
         <h3>There is no customer yet </h3>
     }
     else
     {
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Family</th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
+        <table class="table table-bordered table-hover">
+            <thead>
                 <tr>
-                  
-                    <td>@Html.ActionLink(@item.Name, "Details", "customer", new {id = item.Id },null)</td>
-                    
+                    <th>Customer</th>
+                    <th>Discount Rate</th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+
+                @foreach (var customer in Model)
+                {
+                    <tr>
+
+                        <td>@Html.ActionLink(customer.Name, "Details", "customer", new { id = customer.Id }, null)</td>
+                        <td>@customer.MembershipType.DiscountRate%</td>
 
 
+                    </tr>
+                }
 
+
+            </tbody>
         </table>
     }

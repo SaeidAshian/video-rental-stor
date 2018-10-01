@@ -1,21 +1,13 @@
-﻿@model List<VideoRentalApp.Models.Customer>
+﻿@model VideoRentalApp.Models.Customer
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "customers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>customers detail</h1>
-
-    
-
-        @foreach (var item in Model)
-        {
-            
-
-                <h5>@item.Name</h5>
-
-           
-        }
-
-<h5>
-    @Html.ActionLink("click to return", "Index","Customer")
-</h5>
+<h2>@Model.Name</h2>
+@*<ul>
+    <li>Membership Type: @Model.MembershipType.Name</li>
+    @if (Model.Birthdate.HasValue)
+    {
+        <li>Birthdate: @Model.Birthdate.Value.ToShortDateString()</li>
+    }
+</ul>*@

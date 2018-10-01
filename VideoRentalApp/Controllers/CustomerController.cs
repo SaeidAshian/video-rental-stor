@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,48 +11,69 @@ namespace VideoRentalApp.Controllers
     public class CustomerController : Controller
     {
         // GET: Customer
+        private ApplicationDbContext _context;
+        public CustomerController()
+        {
+            _context=new ApplicationDbContext();
+        }
         
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         public ViewResult Index()
         {
-            var customers = new List<Customer>
+            // USE DATABASE FOR INITIALIZE NOW
+            //var customers = new List<Customer>
+            //{
+            //    new Customer{Name="saeid",Id=1},
+            //    new Customer{Name="sara",Id=2},
+            //    new Customer{Name="sara2",Id=3},
+            //    new Customer{Name="sahar",Id=4},
+            //    new Customer{Name="samira",Id=5},
+            //};
+            try
             {
-                new Customer{Name="saeid",Id=1},
-                new Customer{Name="sara",Id=2},
-                new Customer{Name="sara2",Id=3},
-                new Customer{Name="sahar",Id=4},
-                new Customer{Name="samira",Id=5},
-            };
-            return View(customers);
+                var Customers = _context.Customers.Include(c => c.MembershipType).ToList();
+            return View(Customers);
+
+            }
+            catch (Exception e)
+            {
+                string mes = e.Message;
+                throw;
+            }
+         
         }
-        [Route("customer/Details/{Id}")]
+       // [Route("customer/Details/{Id}")]
         public ActionResult Details(int id)
         {
             
-             var customers = new List<Customer>
-            {
-                new Customer{Name="saeid",Id=1},
-                new Customer{Name="sara",Id=2},
-                new Customer{Name="sara2",Id=3},
-                new Customer{Name="sahar",Id=4},
-                new Customer{Name="samira",Id=5},
-            };
+            // var customers = new List<Customer>
+            //{
+            //    new Customer{Name="saeid",Id=1},
+            //    new Customer{Name="sara",Id=2},
+            //    new Customer{Name="sara2",Id=3},
+            //    new Customer{Name="sahar",Id=4},
+            //    new Customer{Name="samira",Id=5},
+            //};
 
-             var CUST= customers.SingleOrDefault(c => c.Id == id);
-             if (CUST == null)
-             {
-                 return HttpNotFound();
-             }
-             else
-             {
-                 var mycys = new List<Customer> { 
-             new Customer{Name=CUST.Name,Id=id}
-             };
+             var customer=_context.Customers.SingleOrDefault(c => c.Id == id);
+             if (customer == null)
+              return HttpNotFound();
+             
+             //else
+             //{
+             //    var mycys = new List<Customer> { 
+             //new Customer{Name=CUST.Name,Id=id}
+             //};
+
+             return View(customer);
 
 
 
-                 return View(mycys);
-
-             }
+             
              
             
         }

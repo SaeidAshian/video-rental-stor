@@ -32,5 +32,9 @@ namespace VideoRentalApp.Models
         }
 
         public System.Data.Entity.DbSet<VideoRentalApp.Models.Customer> Customers { get; set; }
+
+       // public System.Data.Entity.DbSet<VideoRentalApp.Models.MembershipType> MembershipTypes { get; set; }
+
+       // public System.Data.Entity.DbSet<VideoRentalApp.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
