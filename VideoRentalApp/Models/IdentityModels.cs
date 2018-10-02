@@ -34,5 +34,7 @@ namespace VideoRentalApp.Models
         public System.Data.Entity.DbSet<VideoRentalApp.Models.Customer> Customers { get; set; }
 
         public DbSet<Movie> movies { get; set; }
+        public DbSet<MembershipType> MembershipType { get; set; }
+        public DbSet<Genre> genre { get; set; }
     }
 }

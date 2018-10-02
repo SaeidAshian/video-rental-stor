@@ -3,7 +3,13 @@
         ViewBag.Title = "Customers";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
-    <h1>List of customers</h1>
+    <button type="button" class="btn btn-link" onclick="CustomerForm()">Add new customer</button>
+    
+<br />
+<button type="button" class="btn btn-link" onclick="View()">Add new customer</button>
+<br />
+
+<h3>@Html.ActionLink("Add New Customer", "CustomerForm")</h3> 
     @if (!Model.Any())
     {
         <h3>There is no customer yet </h3>
@@ -23,7 +29,7 @@
                 {
                     <tr>
 
-                        <td>@Html.ActionLink(customer.Name, "Details", "customer", new { id = customer.Id }, null)</td>
+                        <td>@Html.ActionLink(customer.Name, "Edit", "customer", new { id = customer.Id }, null)</td>
                         <td>@customer.MembershipType.NameOfType</td>
 
 

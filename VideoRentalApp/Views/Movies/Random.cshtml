@@ -1,33 +1,66 @@
-﻿
-   @model List<VideoRentalApp.Models.Movie>
+﻿@model IEnumerable<VideoRentalApp.Models.Movie>
 @{
-    ViewBag.Title = "Random";
+    ViewBag.Title = "movies";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>list of movies</h1>
-<ul>
-@foreach (var item in Model)
-{
-    <li>@item.Name</li>
-
-}
-</ul>
-
 
 <h2>Movies</h2>
+<h3>@Html.ActionLink("Add New Film","EditOrAddMovie")</h3>
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Movie</th>
+            <th>Genre</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var movie in Model)
         {
             <tr>
-                <td>@movie.Name</td>
+                <td>@Html.ActionLink(movie.Name, "Edit", "movies", new { id = movie.Id }, null)</td>
+                <td>@movie.genre.Name</td>
+
             </tr>
         }
     </tbody>
 </table>
+
+
+
+
+
+@*------------------- without database -----------------*@
+
+
+@*@model List<VideoRentalApp.Models.Movie>
+    @{
+        ViewBag.Title = "Random";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <h1>list of movies</h1>
+    <ul>
+    @foreach (var item in Model)
+    {
+        <li>@item.Name</li>
+
+    }
+    </ul>
+
+
+    <h2>Movies</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Movie</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+                <tr>
+                    <td>@movie.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
 

@@ -11,6 +11,7 @@ namespace VideoRentalApp.Controllers
 {
     public class MoviesController : Controller
     {
+        // ----------- with database ------------
         private ApplicationDbContext _context;
         public MoviesController()
         {
@@ -21,11 +22,7 @@ namespace VideoRentalApp.Controllers
             _context.Dispose();
         }
 
-        public ViewResult Index()
-        {
-            var movies = _context.movies.Include(m => m.genre).ToList();
-            return View(movies);
-        }
+      
 
         public ActionResult Details(int id)
         {
@@ -38,15 +35,50 @@ namespace VideoRentalApp.Controllers
             return View(movie);
         }
 
+        [HttpPost]
+        public ActionResult Save(Movie  movie)
+        {
+            if (movie.Id == 0)
+            {
+                
+                _context.movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.movies.Single(c => c.Id == movie.Id);
 
+                movieInDb.Name = movie.Name;
+                movieInDb.DateAdded = movie.DateAdded;
+                movieInDb.ReleseDate = movie.ReleseDate;
+                movieInDb.GenreId= movie.GenreId;
+                movieInDb.NumberInStuck = movie.NumberInStuck;
+            }
+            //movie.genre = _context.genre.SingleOrDefault(c => c.Id == movie.GenreId);
+            _context.SaveChanges();
+            return RedirectToAction("Random", "Movies");
+        }
 
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.movies.SingleOrDefault(c => c.Id == id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new MovieFormViewModel
 
+            {
+                movie = movie,
+                Genre = _context.genre.ToList()
+            };
+            return View("EditOrAddMovie", viewModel);
+        }
 
 
 
         // GET: Movies
-        //public ActionResult Random()
-        //{
+        public ActionResult Random()
+        {
             // ---------- this part without database
             //var movie = new Movie() { Name = "sherk" };
             //var movie1 = new List<Movie>();
@@ -62,10 +94,11 @@ namespace VideoRentalApp.Controllers
            // return RedirectToAction("Index", "Home", new { page = 1, sortBy = "name" });    
         
             // ----------- with database ------------
-            
 
+            var movies = _context.movies.Include(m => m.genre).ToList();
+            return View(movies);
             
-        //}
+        }
         //[Route("movies/byrealeasdate/{year}/{month:regex(\\d{2}):range(1 , 12)}")]
         //public ActionResult ByRealeaseYear(int year , int month)
         //{
@@ -92,6 +125,11 @@ namespace VideoRentalApp.Controllers
 
         //    return View(viewModel);
         //}
-
+        public ActionResult EditOrAddMovie()
+        {
+            var Genre = _context.genre;
+            var ViewModel = new MovieFormViewModel { Genre = Genre };
+            return View("EditOrAddMovie", ViewModel);
+        }
     }
 }

@@ -5,11 +5,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VideoRentalApp.Models;
+using VideoRentalApp.ViewModels;
 
 namespace VideoRentalApp.Controllers
 {
     public class CustomerController : Controller
     {
+        int counter;
         // GET: Customer
         private ApplicationDbContext _context;
         public CustomerController()
@@ -21,7 +23,35 @@ namespace VideoRentalApp.Controllers
         {
             _context.Dispose();
         }
+        public ActionResult CustomerForm()
+        {
+            counter = 0;
+            var MembershipTypes = _context.MembershipType.ToList();
+            var ViewModel = new CustomerFormViewModel { MembershipTypes=MembershipTypes};
+            return View("CustomerForm",ViewModel);
+            
+        }
+        
+        [HttpPost]
+        public ActionResult Save(Customer customer)
+        {
+            if (customer.Id==0)
+            
+                
+            _context.Customers.Add(customer);
+         else
+	    {
+        var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
 
+        customerInDb.Name = customer.Name;
+        customerInDb.Family = customer.Family;
+        customerInDb.Birthday = customer.Birthday;
+        customerInDb.MembershipTypeId = customer.MembershipTypeId;
+        customerInDb.IsSubscribToNewsletter = customer.IsSubscribToNewsletter; 
+	}
+            _context.SaveChanges();
+            return RedirectToAction("Index","customer");
+        }
         public ViewResult Index()
         {
             // USE DATABASE FOR INITIALIZE NOW
@@ -71,11 +101,25 @@ namespace VideoRentalApp.Controllers
 
              return View(customer);
 
-
-
-             
+                  
              
             
+        }
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer==null)
+            {
+              return  HttpNotFound()  ;
+            }
+            var viewModel = new CustomerFormViewModel
+
+            {
+                customer = customer,
+                MembershipTypes = _context.MembershipType .ToList()
+            };
+            counter = 1;
+            return View("CustomerForm",viewModel);
         }
     }
 }
