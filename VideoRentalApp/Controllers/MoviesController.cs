@@ -38,6 +38,11 @@ namespace VideoRentalApp.Controllers
         [HttpPost]
         public ActionResult Save(Movie  movie)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new MovieFormViewModel {movie=movie,Genre=_context.genre.ToList() };
+                return View("EditOrAddMovie", viewModel);
+            }
             if (movie.Id == 0)
             {
                 
