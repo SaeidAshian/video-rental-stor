@@ -26,7 +26,7 @@ namespace VideoRentalApp.Controllers
         {
             
             var MembershipTypes = _context.MembershipType.ToList();
-            var ViewModel = new CustomerFormViewModel { MembershipTypes = MembershipTypes };
+            var ViewModel = new CustomerFormViewModel {customer=new Customer(), MembershipTypes = MembershipTypes };
             return View("CustomerForm", ViewModel);
 
         }

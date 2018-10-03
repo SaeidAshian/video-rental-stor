@@ -28,3 +28,6 @@ textarea {
 .input-validation-error{
     border:2px dashed red;
 }
+.validation-summary-errors{
+    color:red;
+}

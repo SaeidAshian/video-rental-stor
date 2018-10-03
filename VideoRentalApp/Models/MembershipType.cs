@@ -14,6 +14,9 @@ namespace VideoRentalApp.Models
         public short SignUpFee { get; set; }
         public byte DurationInMonth { get; set; }
         public Byte DiscountRate { get; set; }
+
+        public static readonly byte unknown = 0;
+        public static readonly byte pasAsYougo = 1;
         
     }
 }

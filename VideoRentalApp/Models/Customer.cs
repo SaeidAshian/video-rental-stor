@@ -15,7 +15,7 @@ namespace VideoRentalApp.Models
         public string Name { get; set; }
 
         public string Family { get; set; }
-
+        [Min18YearsIfAMember]
         [Display(Name="Date of birth")]
         public DateTime? Birthday { get; set; }
 
