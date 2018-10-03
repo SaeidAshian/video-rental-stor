@@ -34,13 +34,13 @@ namespace VideoRentalApp.Controllers
             }
             return View(movie);
         }
-
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Save(Movie  movie)
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new MovieFormViewModel {movie=movie,Genre=_context.genre.ToList() };
+                var viewModel = new MovieFormViewModel(movie) {Genre=_context.genre.ToList() };
                 return View("EditOrAddMovie", viewModel);
             }
             if (movie.Id == 0)
@@ -53,7 +53,7 @@ namespace VideoRentalApp.Controllers
                 var movieInDb = _context.movies.Single(c => c.Id == movie.Id);
 
                 movieInDb.Name = movie.Name;
-                movieInDb.DateAdded = movie.DateAdded;
+                movieInDb.DateAdded = DateTime.Today;
                 movieInDb.ReleseDate = movie.ReleseDate;
                 movieInDb.GenreId= movie.GenreId;
                 movieInDb.NumberInStuck = movie.NumberInStuck;
@@ -70,10 +70,10 @@ namespace VideoRentalApp.Controllers
             {
                 return HttpNotFound();
             }
-            var viewModel = new MovieFormViewModel
+            var viewModel = new MovieFormViewModel(movie)
 
             {
-                movie = movie,
+               
                 Genre = _context.genre.ToList()
             };
             return View("EditOrAddMovie", viewModel);

@@ -24,6 +24,8 @@ namespace VideoRentalApp.Models
 
         [Display(Name = "Release date")]
         public DateTime ReleseDate { get; set; }
+
+        [Range(1,25)]
         [Display(Name = "Number in stuck")]
         public byte NumberInStuck { get; set; }
         
