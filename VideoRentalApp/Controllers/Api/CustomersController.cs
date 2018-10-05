@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using VideoRentalApp.Models;
+using System.Data.Entity;
+
 
 namespace VideoRentalApp.Controllers.Api
 {
@@ -18,7 +20,7 @@ namespace VideoRentalApp.Controllers.Api
            // GET  /api/customers
         public IEnumerable<Customer> GetCustomers()
         {
-            return _context.Customers.ToList();
+            return _context.Customers.Include(c=> c.MembershipType).ToList();
         }
          // GET /api/customer/1
         public Customer GetCustomer(int id)

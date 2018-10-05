@@ -68,18 +68,19 @@ namespace VideoRentalApp.Controllers
 			//    new Customer{Name="sahar",Id=4},
 			//    new Customer{Name="samira",Id=5},
 			//};
-			try
-			{
-				var Customers = _context.Customers.Include(c => c.MembershipType).ToList();
-			return View(Customers);
+            //   commented thid because now we want to use ajax and web api to get the customers
+            //try
+            //{
+            //    var Customers = _context.Customers.Include(c => c.MembershipType).ToList();
+            //return View(Customers);
 
-			}
-			catch (Exception e)
-			{
-				string mes = e.Message;
-				throw;
-			}
-		 
+            //}
+            //catch (Exception e)
+            //{
+            //    string mes = e.Message;
+            //    throw;
+            //}
+            return View();
 		}
 	   // [Route("customer/Details/{Id}")]
 		public ActionResult Details(int id)
@@ -110,6 +111,7 @@ namespace VideoRentalApp.Controllers
 			 
 			
 		}
+    [Authorize]
 		public ActionResult Edit(int id)
 		{
 			var customer = _context.Customers.SingleOrDefault(c => c.Id == id);

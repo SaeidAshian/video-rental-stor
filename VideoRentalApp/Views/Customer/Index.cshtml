@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<VideoRentalApp.Models.Customer>
-    @{
-        ViewBag.Title = "Customers";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
- 
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <br />
 
-<h3>@Html.ActionLink("Add New Customer", "CustomerForm")</h3> 
+<h3>@Html.ActionLink("Add New Customer", "CustomerForm")</h3>
 <br />
-    @if (!Model.Any())
+@*because we didnot pass any model from controller*@
+@*@if (!Model.Any())
     {
         <h3>There is no customer yet </h3>
     }
@@ -22,30 +23,62 @@
                     <th>Delete</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody>*@
+@*    ------    this is because now we want to use ajax and get the data from Api     --------*@
 
-                @foreach (var customer in Model)
-                {
-                    <tr>
+@*@foreach (var customer in Model)
+    {
+        <tr>
 
-                        <td>@Html.ActionLink(customer.Name, "Edit", "customer", new { id = customer.Id }, null)</td>
-                        <td>@customer.MembershipType.NameOfType</td>
-                        <td>
-                            <button data-customer-id="@customer.Id" class="btn btn-link js-delete">delete</button>
-                        </td>
+            <td>@Html.ActionLink(customer.Name, "Edit", "customer", new { id = customer.Id }, null)</td>
+            <td>@customer.MembershipType.NameOfType</td>
+            <td>
+                <button data-customer-id="@customer.Id" class="btn btn-link js-delete">delete</button>
+            </td>
 
-                    </tr>
-                }
-
-                
-            </tbody>
-        </table>
+        </tr>
     }
+    }*@
+
+<table id="customers" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Discount Rate</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
 @section scripts
 {
     <script>
         $(document).ready(function () {
-            $("#customers").DataTable();
+           var table= $("#customers").DataTable({
+                ajax: {
+                    url: "/Api/customers",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customer/edit/" + customer.id + "'>" + customer.name + "</a>";
+
+                        }
+                    },
+                    {
+                        data: "membershipType.nameOfType"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
 
             $("#customers ").on("click", ".js-delete", function () {
                 var button = $(this);
@@ -55,16 +88,17 @@
                             url: "/Api/customers/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function () {
-                                button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();
+                               
                             }
                         });
                     }
                 });
-                
-                
+
+
             });
         });
-        
+
     </script>
 
-    }
+}
